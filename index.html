@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dinner Under Stars</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky1: #0b0f2b;
+    --sky2: #2a1446;
+    --card: #1a1235cc;
+    --text: #fbe9f0;
+    --gold: #f5c66b;
+    --yes: #e8336f;
+    --yes-hover: #ff4a85;
+    --no: #3a2f57;
+    --no-text: #cbb9dd;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Quicksand', system-ui, sans-serif;
+    background: radial-gradient(ellipse at 50% 120%, #4a1d4f 0%, transparent 60%),
+                linear-gradient(180deg, var(--sky1), var(--sky2));
+    color: var(--text);
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* night sky */
+  .star {
+    position: fixed; border-radius: 50%; background: #fff;
+    animation: twinkle ease-in-out infinite;
+  }
+  @keyframes twinkle { 50% { opacity: .15; } }
+  .moon {
+    position: fixed; top: 6vh; right: 8vw;
+    width: 70px; height: 70px; border-radius: 50%;
+    background: #fff4d6;
+    box-shadow: 0 0 40px 10px #fff4d655;
+  }
+  .moon::after {
+    content: ''; position: absolute; top: -6px; left: -14px;
+    width: 70px; height: 70px; border-radius: 50%;
+    background: var(--sky1);
+  }
+
+  .card {
+    position: relative; z-index: 2;
+    background: var(--card);
+    backdrop-filter: blur(10px);
+    border: 1px solid #f5c66b44;
+    border-radius: 28px;
+    padding: 34px 24px 38px;
+    width: 100%; max-width: 440px;
+    text-align: center;
+    box-shadow: 0 0 60px #e8336f33;
+  }
+  .emoji {
+    font-size: 84px; line-height: 1;
+    display: inline-block;
+    animation: glow 2.4s ease-in-out infinite;
+    user-select: none;
+  }
+  @keyframes glow { 50% { transform: translateY(-8px); filter: drop-shadow(0 0 14px #f5c66b); } }
+  h1 {
+    font-family: 'Great Vibes', cursive;
+    font-weight: 400; color: var(--gold);
+    font-size: clamp(34px, 9vw, 46px); line-height: 1.15;
+    margin: 16px 0 8px;
+  }
+  .sub {
+    min-height: 1.6em;
+    font-size: 17px; font-weight: 700;
+    margin-bottom: 26px;
+  }
+  .sub.pop { animation: pop .35s ease; }
+  @keyframes pop { 40% { transform: scale(1.12); } }
+
+  .sad #question { display: none; }
+  .sad .sub {
+    font-family: 'Great Vibes', cursive; font-weight: 400;
+    color: var(--gold);
+    font-size: clamp(32px, 8.5vw, 42px); line-height: 1.2;
+    margin: 18px 0 28px;
+  }
+  .sad .emoji { animation: shake .5s ease; font-size: 100px; }
+  @keyframes shake {
+    20%, 60% { transform: translateX(-10px) rotate(-6deg); }
+    40%, 80% { transform: translateX(10px) rotate(6deg); }
+  }
+
+  .buttons {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    align-items: center; justify-content: center;
+    min-height: 70px;
+  }
+  button {
+    font-family: inherit; font-weight: 700;
+    border: none; border-radius: 999px; cursor: pointer;
+    transition: transform .25s ease, font-size .25s ease, padding .25s ease, opacity .3s;
+  }
+  #yes {
+    background: var(--yes); color: #fff;
+    font-size: 20px; padding: 12px 34px;
+    box-shadow: 0 0 24px #e8336f88;
+  }
+  #yes:hover { background: var(--yes-hover); }
+  #no { background: var(--no); color: var(--no-text); font-size: 20px; padding: 12px 34px; }
+  #no.gone { opacity: 0; pointer-events: none; position: absolute; }
+
+  /* success */
+  .success { display: none; }
+  .done .ask { display: none; }
+  .done .success { display: block; }
+  .couple { width: 100%; max-width: 300px; height: auto; display: block; margin: 0 auto; }
+  .couple .float-heart { animation: rise 2.2s ease-in-out infinite; transform-origin: center; }
+  @keyframes rise { 0% { transform: translateY(8px) scale(.8); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateY(-18px) scale(1.1); opacity: 0; } }
+  .success h1 { margin-top: 6px; }
+  .success p { font-size: 17px; line-height: 1.5; }
+
+  .fall {
+    position: fixed; top: -40px; z-index: 1;
+    pointer-events: none; user-select: none;
+    animation: fall linear forwards;
+  }
+  @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+</style>
+</head>
+<body>
+  <div class="moon"></div>
+
+  <div class="card" id="card">
+    <div class="ask">
+      <div class="emoji" id="emoji">🕯️🍷</div>
+      <h1 id="question">Khushi, will you go on a romantic dinner date with me?</h1>
+      <div class="sub" id="sub">Just you, me, candles &amp; the moon 🌙</div>
+      <div class="buttons">
+        <button id="yes">Yes</button>
+        <button id="no">No</button>
+      </div>
+    </div>
+
+    <div class="success">
+      <svg class="couple" viewBox="0 0 300 270" role="img" aria-label="Cartoon couple kissing under the night sky">
+        <!-- floating heart -->
+        <g class="float-heart">
+          <path d="M150 38 C150 30 140 26 136 32 C132 38 140 44 150 52 C160 44 168 38 164 32 C160 26 150 30 150 38Z" fill="#ff4a85"/>
+        </g>
+
+        <!-- girl's long hair (behind) -->
+        <path d="M168 50 C190 44 204 62 200 86 C198 110 206 128 212 146 C196 150 184 136 182 116 C180 100 176 92 170 88Z" fill="#3b1f14"/>
+
+        <!-- man: legs + shoes -->
+        <rect x="112" y="196" width="12" height="52" rx="4" fill="#1c2340"/>
+        <rect x="128" y="196" width="12" height="52" rx="4" fill="#1c2340"/>
+        <ellipse cx="116" cy="250" rx="11" ry="5" fill="#111"/>
+        <ellipse cx="136" cy="250" rx="11" ry="5" fill="#111"/>
+        <!-- man: suit body -->
+        <path d="M108 104 C116 96 140 96 148 104 L152 200 L106 200Z" fill="#232c52"/>
+        <path d="M122 100 L130 100 L134 140 L126 150 L118 140Z" fill="#f4f1ea"/>
+        <path d="M126 104 L130 104 L131 130 L128 136 L125 130Z" fill="#b3123f"/>
+        <!-- man: neck -->
+        <rect x="122" y="88" width="12" height="14" rx="4" fill="#e8b58f"/>
+
+        <!-- girl: legs + heels -->
+        <rect x="164" y="206" width="9" height="42" rx="4" fill="#f0c3a1"/>
+        <rect x="177" y="206" width="9" height="42" rx="4" fill="#f0c3a1"/>
+        <path d="M160 246 L174 246 L174 252 L160 252Z" fill="#b3123f"/>
+        <path d="M175 246 L189 246 L189 252 L175 252Z" fill="#b3123f"/>
+        <!-- girl: bodycon dress -->
+        <path d="M162 102 C170 98 182 98 188 102 C188 118 182 128 182 138 C186 150 192 160 190 172 L186 212 L164 212 L160 172 C158 160 166 150 168 138 C168 128 162 118 162 102Z" fill="#d6164f"/>
+        <path d="M168 138 C174 140 178 140 182 138" stroke="#a80f3c" stroke-width="2" fill="none"/>
+        <!-- girl: neck + shoulders -->
+        <rect x="168" y="88" width="10" height="16" rx="4" fill="#f0c3a1"/>
+
+        <!-- man's arm around her waist -->
+        <path d="M140 112 C152 126 160 140 172 144" stroke="#232c52" stroke-width="11" fill="none" stroke-linecap="round"/>
+        <circle cx="174" cy="144" r="5.5" fill="#e8b58f"/>
+        <!-- girl's arm on his shoulder -->
+        <path d="M170 108 C158 100 146 98 132 102" stroke="#f0c3a1" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+        <!-- man head -->
+        <circle cx="128" cy="68" r="25" fill="#e8b58f"/>
+        <path d="M150 74 L156 78 L150 82Z" fill="#e8b58f"/>
+        <path d="M104 66 C102 44 120 36 136 40 C148 42 154 50 152 58 C140 52 126 52 116 60 C112 66 108 70 104 66Z" fill="#1d1410"/>
+        <ellipse cx="108" cy="70" rx="4" ry="6" fill="#d9a07a"/>
+        <path d="M134 66 Q140 70 146 66" stroke="#1d1410" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <ellipse cx="140" cy="78" rx="5" ry="3" fill="#f08a8a" opacity=".55"/>
+
+        <!-- girl head -->
+        <circle cx="172" cy="72" r="23" fill="#f0c3a1"/>
+        <path d="M150 78 L144 81 L150 85Z" fill="#f0c3a1"/>
+        <path d="M156 58 C160 44 182 42 192 54 C198 62 196 74 192 80 C188 66 176 58 162 62 C160 62 158 60 156 58Z" fill="#3b1f14"/>
+        <path d="M154 68 Q160 72 165 68" stroke="#3b1f14" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <path d="M154 66 L151 63 M157 65 L155 61" stroke="#3b1f14" stroke-width="1.4" stroke-linecap="round"/>
+        <ellipse cx="162" cy="80" rx="5" ry="3" fill="#f07a8a" opacity=".6"/>
+        <!-- kiss -->
+        <path d="M148 82 Q150 80 152 82 Q150 85 148 82Z" fill="#c2184f"/>
+        <circle cx="186" cy="84" r="2.2" fill="#f5c66b"/>
+
+        <!-- ground glow -->
+        <ellipse cx="150" cy="256" rx="70" ry="6" fill="#f5c66b" opacity=".18"/>
+      </svg>
+      <h1>Yaaay!!! 💖</h1>
+      <p>It's a date, Khushi 🌙<br>Candles, dinner &amp; you — can't wait! 🕯️🍷</p>
+    </div>
+  </div>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const name = params.get('name') || 'Khushi';
+  document.getElementById('question').textContent =
+    `${name}, will you go on a romantic dinner date with me?`;
+
+  // stars
+  for (let i = 0; i < 70; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 1;
+    s.style.width = s.style.height = size + 'px';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.top = Math.random() * 100 + 'vh';
+    s.style.animationDuration = 1.5 + Math.random() * 3 + 's';
+    s.style.animationDelay = Math.random() * 3 + 's';
+    document.body.appendChild(s);
+  }
+
+  const lines = [
+    ["🥺", `No ${name}, pls think again… 🥺`],
+    ["😢", `${name} pls… doesn't it hurt? 💔`],
+    ["😭", `It hurts me ${name}… it really hurts 😭`],
+    ["🕯️", `The candles are already lit for you ${name}… 🕯️`],
+    ["💔", `My heart is breaking, ${name} 💔`],
+    ["🌹", `Roses, moonlight & your favourite dessert. Pls ${name}? 🌹`],
+    ["😌", `Okay fine… now you only have one option ${name} 😌`],
+  ];
+
+  const yes = document.getElementById('yes');
+  const no = document.getElementById('no');
+  const sub = document.getElementById('sub');
+  const emoji = document.getElementById('emoji');
+  const card = document.getElementById('card');
+  let count = 0;
+
+  no.addEventListener('click', () => {
+    const [e, msg] = lines[Math.min(count, lines.length - 1)];
+    emoji.textContent = e;
+    sub.textContent = msg;
+    sub.classList.remove('pop'); void sub.offsetWidth; sub.classList.add('pop');
+    card.classList.remove('sad'); void card.offsetWidth; card.classList.add('sad');
+    rain(['💧', '💧', '💔'], 14, 4000);
+    count++;
+
+    yes.style.fontSize = 20 + count * 9 + 'px';
+    yes.style.padding = `${12 + count * 4}px ${34 + count * 10}px`;
+    no.style.transform = `scale(${Math.max(1 - count * 0.13, 0.3)})`;
+
+    if (count >= lines.length) no.classList.add('gone');
+  });
+
+  yes.addEventListener('click', () => {
+    card.classList.remove('sad');
+    card.classList.add('done');
+    let n = 0;
+    const timer = setInterval(() => {
+      rain(['💖', '🌹', '✨', '❤️', '💕'], 1, 6500);
+      if (++n > 120) clearInterval(timer);
+    }, 70);
+  });
+
+  function rain(icons, count, life) {
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('div');
+      el.className = 'fall';
+      el.textContent = icons[Math.floor(Math.random() * icons.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.fontSize = 18 + Math.random() * 22 + 'px';
+      el.style.animationDuration = 2 + Math.random() * 3 + 's';
+      el.style.animationDelay = Math.random() * 0.5 + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), life);
+    }
+  }
+</script>
+</body>
+</html>
