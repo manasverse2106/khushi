@@ -116,8 +116,8 @@
   .success { display: none; }
   .done .ask { display: none; }
   .done .success { display: block; }
-  .couple { width: 100%; max-width: 300px; height: auto; display: block; margin: 0 auto; }
-  .couple .float-heart { animation: rise 2.2s ease-in-out infinite; transform-origin: center; }
+  .couple { width: 100%; max-width: 320px; height: auto; display: block; margin: 0 auto; }
+  .couple .float-heart { animation: rise 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; opacity: 0; }
   @keyframes rise { 0% { transform: translateY(8px) scale(.8); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateY(-18px) scale(1.1); opacity: 0; } }
   .success h1 { margin-top: 6px; }
   .success p { font-size: 17px; line-height: 1.5; }
@@ -145,65 +145,110 @@
     </div>
 
     <div class="success">
-      <svg class="couple" viewBox="0 0 300 270" role="img" aria-label="Cartoon couple kissing under the night sky">
-        <!-- floating heart -->
-        <g class="float-heart">
-          <path d="M150 38 C150 30 140 26 136 32 C132 38 140 44 150 52 C160 44 168 38 164 32 C160 26 150 30 150 38Z" fill="#ff4a85"/>
-        </g>
+      <svg class="couple" viewBox="0 0 320 300" role="img" aria-label="Caricature of a couple kissing under the night sky">
+        <defs>
+          <radialGradient id="spot" cx="50%" cy="45%" r="50%">
+            <stop offset="0" stop-color="#f5c66b" stop-opacity=".35"/>
+            <stop offset="1" stop-color="#f5c66b" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="dress" x1="0" x2="1">
+            <stop offset="0" stop-color="#ff2d6a"/>
+            <stop offset=".6" stop-color="#d9124d"/>
+            <stop offset="1" stop-color="#a50c3a"/>
+          </linearGradient>
+          <linearGradient id="suit" x1="0" x2="1">
+            <stop offset="0" stop-color="#1b2246"/>
+            <stop offset="1" stop-color="#2d3a6e"/>
+          </linearGradient>
+          <linearGradient id="hairG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#4a2516"/>
+            <stop offset="1" stop-color="#2a130b"/>
+          </linearGradient>
+        </defs>
 
-        <!-- girl's long hair (behind) -->
-        <path d="M168 50 C190 44 204 62 200 86 C198 110 206 128 212 146 C196 150 184 136 182 116 C180 100 176 92 170 88Z" fill="#3b1f14"/>
+        <circle cx="160" cy="150" r="140" fill="url(#spot)"/>
+        <ellipse cx="168" cy="290" rx="92" ry="7" fill="#000" opacity=".35"/>
 
-        <!-- man: legs + shoes -->
-        <rect x="112" y="196" width="12" height="52" rx="4" fill="#1c2340"/>
-        <rect x="128" y="196" width="12" height="52" rx="4" fill="#1c2340"/>
-        <ellipse cx="116" cy="250" rx="11" ry="5" fill="#111"/>
-        <ellipse cx="136" cy="250" rx="11" ry="5" fill="#111"/>
-        <!-- man: suit body -->
-        <path d="M108 104 C116 96 140 96 148 104 L152 200 L106 200Z" fill="#232c52"/>
-        <path d="M122 100 L130 100 L134 140 L126 150 L118 140Z" fill="#f4f1ea"/>
-        <path d="M126 104 L130 104 L131 130 L128 136 L125 130Z" fill="#b3123f"/>
-        <!-- man: neck -->
-        <rect x="122" y="88" width="12" height="14" rx="4" fill="#e8b58f"/>
+        <!-- her long wavy hair (back) -->
+        <path d="M172 62 C186 36 232 34 246 66 C256 90 244 112 254 138 C264 164 246 184 256 214 C240 222 222 206 226 184 C230 166 218 150 222 132 C226 116 214 108 210 100Z" fill="url(#hairG)"/>
+        <path d="M236 90 C246 110 238 130 246 152 M232 170 C240 186 236 200 246 210" stroke="#6b3a24" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
 
-        <!-- girl: legs + heels -->
-        <rect x="164" y="206" width="9" height="42" rx="4" fill="#f0c3a1"/>
-        <rect x="177" y="206" width="9" height="42" rx="4" fill="#f0c3a1"/>
-        <path d="M160 246 L174 246 L174 252 L160 252Z" fill="#b3123f"/>
-        <path d="M175 246 L189 246 L189 252 L175 252Z" fill="#b3123f"/>
-        <!-- girl: bodycon dress -->
-        <path d="M162 102 C170 98 182 98 188 102 C188 118 182 128 182 138 C186 150 192 160 190 172 L186 212 L164 212 L160 172 C158 160 166 150 168 138 C168 128 162 118 162 102Z" fill="#d6164f"/>
-        <path d="M168 138 C174 140 178 140 182 138" stroke="#a80f3c" stroke-width="2" fill="none"/>
-        <!-- girl: neck + shoulders -->
-        <rect x="168" y="88" width="10" height="16" rx="4" fill="#f0c3a1"/>
+        <!-- his legs + shoes -->
+        <path d="M104 212 L164 212 L160 276 L142 276 L134 232 L126 276 L108 276Z" fill="#161c3a"/>
+        <path d="M100 280 C100 272 118 270 126 276 L128 282 L100 282Z" fill="#0b0b0f"/>
+        <path d="M140 280 C140 272 160 270 168 278 L168 283 L140 283Z" fill="#0b0b0f"/>
 
-        <!-- man's arm around her waist -->
-        <path d="M140 112 C152 126 160 140 172 144" stroke="#232c52" stroke-width="11" fill="none" stroke-linecap="round"/>
-        <circle cx="174" cy="144" r="5.5" fill="#e8b58f"/>
-        <!-- girl's arm on his shoulder -->
-        <path d="M170 108 C158 100 146 98 132 102" stroke="#f0c3a1" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <!-- her legs: one on tiptoe, one kicked back -->
+        <path d="M192 250 L189 280" stroke="#f2c3a0" stroke-width="10" stroke-linecap="round"/>
+        <path d="M181 286 C182 279 192 277 197 281 L198 288 L182 288Z" fill="#b3123f"/>
+        <path d="M196 288 L198 296" stroke="#b3123f" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M205 250 C210 262 214 268 216 270 C226 266 234 258 238 248" stroke="#f2c3a0" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <path d="M234 240 C242 240 248 246 246 252 L238 256 Z" fill="#b3123f"/>
 
-        <!-- man head -->
-        <circle cx="128" cy="68" r="25" fill="#e8b58f"/>
-        <path d="M150 74 L156 78 L150 82Z" fill="#e8b58f"/>
-        <path d="M104 66 C102 44 120 36 136 40 C148 42 154 50 152 58 C140 52 126 52 116 60 C112 66 108 70 104 66Z" fill="#1d1410"/>
-        <ellipse cx="108" cy="70" rx="4" ry="6" fill="#d9a07a"/>
-        <path d="M134 66 Q140 70 146 66" stroke="#1d1410" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-        <ellipse cx="140" cy="78" rx="5" ry="3" fill="#f08a8a" opacity=".55"/>
+        <!-- necks -->
+        <rect x="118" y="118" width="22" height="30" rx="8" fill="#e2ad86"/>
+        <rect x="188" y="124" width="14" height="26" rx="6" fill="#f2c3a0"/>
 
-        <!-- girl head -->
-        <circle cx="172" cy="72" r="23" fill="#f0c3a1"/>
-        <path d="M150 78 L144 81 L150 85Z" fill="#f0c3a1"/>
-        <path d="M156 58 C160 44 182 42 192 54 C198 62 196 74 192 80 C188 66 176 58 162 62 C160 62 158 60 156 58Z" fill="#3b1f14"/>
-        <path d="M154 68 Q160 72 165 68" stroke="#3b1f14" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-        <path d="M154 66 L151 63 M157 65 L155 61" stroke="#3b1f14" stroke-width="1.4" stroke-linecap="round"/>
-        <ellipse cx="162" cy="80" rx="5" ry="3" fill="#f07a8a" opacity=".6"/>
-        <!-- kiss -->
-        <path d="M148 82 Q150 80 152 82 Q150 85 148 82Z" fill="#c2184f"/>
-        <circle cx="186" cy="84" r="2.2" fill="#f5c66b"/>
+        <!-- his tux -->
+        <path d="M98 160 C100 144 120 140 128 140 C142 140 160 144 162 160 L168 216 L96 216Z" fill="url(#suit)"/>
+        <path d="M120 142 L138 142 L135 186 L129 194 L123 186Z" fill="#f7f3ec"/>
+        <path d="M120 142 L129 192 L108 162Z" fill="#11162e"/>
+        <path d="M138 142 L129 192 L152 162Z" fill="#11162e"/>
+        <path d="M121 150 L129 155 L121 160Z M137 150 L129 155 L137 160Z" fill="#b3123f"/>
+        <circle cx="129" cy="155" r="2.6" fill="#7d0b2c"/>
+        <circle cx="129" cy="172" r="1.6" fill="#11162e"/>
+        <circle cx="129" cy="181" r="1.6" fill="#11162e"/>
+        <path d="M144 176 L154 174 L153 178 Z" fill="#f5c66b"/>
 
-        <!-- ground glow -->
-        <ellipse cx="150" cy="256" rx="70" ry="6" fill="#f5c66b" opacity=".18"/>
+        <!-- her shoulders + bodycon dress -->
+        <path d="M176 166 C176 150 186 144 195 144 C206 144 216 150 216 166Z" fill="#f2c3a0"/>
+        <path d="M178 162 C186 155 192 163 196 158 C200 163 206 155 214 162 C216 174 210 186 207 196 C213 206 218 216 214 228 L209 254 L184 254 L180 228 C176 216 182 206 186 196 C182 186 175 174 178 162Z" fill="url(#dress)"/>
+        <path d="M209 200 C214 210 215 220 211 232" stroke="#ff7aa0" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+        <path d="M186 196 C193 199 201 199 207 196" stroke="#8f0a33" stroke-width="1.6" fill="none"/>
+        <!-- her far arm holding a rose -->
+        <path d="M214 160 C222 176 222 192 218 206" stroke="#f2c3a0" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <path d="M218 208 L226 236" stroke="#2f7a3a" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M222 220 C228 216 232 220 230 224 C226 226 223 224 222 220Z" fill="#2f7a3a"/>
+        <circle cx="217" cy="206" r="7" fill="#c8103f"/>
+        <path d="M213 205 C216 201 221 203 220 207 C218 210 214 209 215 206" stroke="#7d0b2c" stroke-width="1.4" fill="none"/>
+
+        <!-- his arm around her waist -->
+        <path d="M154 156 C166 178 184 194 206 196" stroke="url(#suit)" stroke-width="14" fill="none" stroke-linecap="round"/>
+        <path d="M199 192 L203 200" stroke="#f7f3ec" stroke-width="4"/>
+        <ellipse cx="209" cy="196" rx="7.5" ry="6.5" fill="#e2ad86"/>
+
+        <!-- her arm around his neck -->
+        <path d="M184 158 C168 152 146 144 120 142" stroke="#f2c3a0" stroke-width="9" fill="none" stroke-linecap="round"/>
+        <ellipse cx="117" cy="141" rx="7" ry="6" fill="#f2c3a0"/>
+        <circle cx="160" cy="149" r="3" fill="#f5c66b"/>
+
+        <!-- HIS HEAD -->
+        <ellipse cx="99" cy="98" rx="8" ry="11" fill="#d99c74"/>
+        <path d="M96 78 C98 56 126 46 148 58 C156 64 158 74 158 84 C162 90 168 95 167 99 C166 102 162 102 160 103 C164 106 164 110 161 111 C164 114 162 118 157 118 C156 126 148 132 136 132 C120 132 104 124 98 110 C92 100 92 88 96 78Z" fill="#e8b58f"/>
+        <path d="M150 118 C146 124 140 126 134 126" stroke="#c98e68" stroke-width="1.5" fill="none" opacity=".6"/>
+        <path d="M90 96 C82 64 102 34 134 36 C152 36 166 46 166 62 C158 58 150 60 146 66 C138 60 124 62 114 70 C108 76 106 86 106 96 C102 92 96 92 90 96Z" fill="#1b120d"/>
+        <path d="M120 44 C134 38 150 42 158 52" stroke="#3a2a20" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M137 78 Q146 73 155 78" stroke="#1b120d" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+        <path d="M139 89 Q146 95 153 89" stroke="#1b120d" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <ellipse cx="142" cy="106" rx="7" ry="4" fill="#f08a8a" opacity=".5"/>
+
+        <!-- HER HEAD -->
+        <path d="M226 82 C224 60 196 50 174 62 C166 68 164 78 164 88 C161 94 157 99 158 103 C159 106 161 106 163 107 C159 110 159 114 162 115 C159 118 161 122 165 122 C166 130 174 136 186 136 C202 136 218 128 224 114 C230 104 230 92 226 82Z" fill="#f2c3a0"/>
+        <path d="M163 107 C159 110 159 114 162 115 C159 118 161 122 165 122 C167 117 166 110 163 107Z" fill="#d1104a"/>
+        <path d="M166 70 C168 46 204 36 228 54 C238 64 238 84 230 98 C226 84 214 72 198 70 C186 70 176 72 170 78 C168 76 167 73 166 70Z" fill="url(#hairG)"/>
+        <path d="M184 52 C200 46 216 50 226 60" stroke="#6b3a24" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <circle cx="222" cy="66" r="5" fill="#ff7aa0"/><circle cx="222" cy="66" r="2" fill="#f5c66b"/>
+        <path d="M169 84 Q176 80 184 83" stroke="#2a130b" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <path d="M169 93 Q176 99 184 93" stroke="#2a130b" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <path d="M170 95 L166 99 M174 97 L171 101 M178 97 L177 102" stroke="#2a130b" stroke-width="1.6" stroke-linecap="round"/>
+        <ellipse cx="182" cy="108" rx="7" ry="4" fill="#ff7a8a" opacity=".55"/>
+        <path d="M212 114 L212 122" stroke="#f5c66b" stroke-width="1.4"/>
+        <circle cx="212" cy="125" r="3.2" fill="#f5c66b"/>
+
+        <!-- floating hearts -->
+        <g class="float-heart"><path d="M162 40 C162 32 152 28 148 34 C144 40 152 46 162 54 C172 46 180 40 176 34 C172 28 162 32 162 40Z" fill="#ff4a85"/></g>
+        <g class="float-heart" style="animation-delay:.7s"><path d="M140 26 C140 22 135 20 133 23 C131 26 135 29 140 33 C145 29 149 26 147 23 C145 20 140 22 140 26Z" fill="#ff8fb1"/></g>
+        <g class="float-heart" style="animation-delay:1.4s"><path d="M186 22 C186 18 181 16 179 19 C177 22 181 25 186 29 C191 25 195 22 193 19 C191 16 186 18 186 22Z" fill="#ff8fb1"/></g>
       </svg>
       <h1>Yaaay!!! 💖</h1>
       <p>It's a date, Khushi 🌙<br>Candles, dinner &amp; you — can't wait! 🕯️🍷</p>
